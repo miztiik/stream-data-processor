@@ -12,7 +12,12 @@ import boto3
 
 import constants
 
-logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(filename=f"{constants.LOG_FILE_NAME}",
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.INFO)
 LOGGER = logging.getLogger()
 
 ##################################################
