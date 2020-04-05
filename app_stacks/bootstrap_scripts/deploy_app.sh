@@ -60,50 +60,50 @@ function install_cw_agent(){
 
     cw_agent_schema="/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
 
-    cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EOF"
-    {
-    "agent": {
-        "metrics_collection_interval": 5,
-        "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
-    },
-    "metrics": {
-        "metrics_collected": {
-        "mem": {
-            "measurement": [
-            "mem_used_percent"
-            ]
-        }
-        },
-        "append_dimensions": {
-        "ImageId": "${aws:ImageId}",
-        "InstanceId": "${aws:InstanceId}",
-        "InstanceType": "${aws:InstanceType}"
-        },
-        "aggregation_dimensions": [
-        [
-            "InstanceId",
-            "InstanceType"
-        ],
-        []
+cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EOF"
+{
+"agent": {
+    "metrics_collection_interval": 5,
+    "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
+},
+"metrics": {
+    "metrics_collected": {
+    "mem": {
+        "measurement": [
+        "mem_used_percent"
         ]
+    }
     },
-    "logs": {
-        "logs_collected": {
-        "files": {
-            "collect_list": [
-            {
-                "file_path": "/var/log/stream-data-processor",
-                "log_group_name": "/Mystique/Automation/{instance_id}",
-                "timestamp_format": "%b %-d %H:%M:%S",
-                "timezone": "Local"
-            }
-            ]
+    "append_dimensions": {
+    "ImageId": "${aws:ImageId}",
+    "InstanceId": "${aws:InstanceId}",
+    "InstanceType": "${aws:InstanceType}"
+    },
+    "aggregation_dimensions": [
+    [
+        "InstanceId",
+        "InstanceType"
+    ],
+    []
+    ]
+},
+"logs": {
+    "logs_collected": {
+    "files": {
+        "collect_list": [
+        {
+            "file_path": "/var/log/stream-data-processor",
+            "log_group_name": "/Mystique/Automation/{instance_id}",
+            "timestamp_format": "%b %-d %H:%M:%S",
+            "timezone": "Local"
         }
-        },
-        "log_stream_name": "{instance_id}"
+        ]
     }
-    }
-    EOF
+    },
+    "log_stream_name": "{instance_id}"
+}
+}
+EOF
 
     # Configure the agent to monitor ssh log file
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:${cw_agent_schema} -s
