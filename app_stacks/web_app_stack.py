@@ -17,13 +17,18 @@ class global_args:
 
 class webAppStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, vpc, stream_arn, ** kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, vpc, stream_name, stream_arn, ** kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Read BootStrap Script):
         try:
             with open("app_stacks/bootstrap_scripts/deploy_app.sh", mode="r") as file:
-                user_data = file.read()
+                file_data = file.read()
+
+            # Let us add the stream name to our user_data script
+            # Ideally can also use SSM Parameter Store
+            user_data = file_data + f"export STREAM_NAME='{stream_name}'"
+
         except OSError:
             print('Unable to read UserData script')
 

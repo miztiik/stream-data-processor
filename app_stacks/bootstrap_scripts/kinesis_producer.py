@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# version: 05Apr2020
 import json
 import logging
 import os
@@ -15,20 +15,23 @@ import constants
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger()
 
-# version: 05Apr2020
-
 ##################################################
 #############     SET GLOBALS     ################
 ##################################################
-STREAM_NAME = "stream_pipe"
+
 NO_OF_RECORDS = int(constants.NO_OF_RECORDS)
 FREQUENCY = int(constants.FREQUENCY)
 DURATION = int(constants.DURATION)
+STREAM_NAME = str(constants.STREAM_NAME)
+AWS_REGION = str(constants.AWS_REGION)
+# STREAM_NAME = os.getenv("STREAM_NAME", "stream_pipe")
+# AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
+
 
 input_file = "data/covid19_india_04_apr_2020.json"
 
 client = boto3.client(
-    'kinesis', region_name=os.getenv('AWS_REGION', 'us-east-1'))
+    'kinesis', region_name=AWS_REGION)
 
 
 def _gen_uuid():
