@@ -119,4 +119,5 @@ install_libs
 clone_git_repo
 add_env_vars
 install_cw_agent
+cd /var/stream-data-processor/app_stacks/bootstrap_scripts/
 python3 /var/stream-data-processor/app_stacks/bootstrap_scripts/kinesis_producer.py

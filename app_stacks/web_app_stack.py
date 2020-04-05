@@ -66,6 +66,16 @@ class webAppStack(core.Stack):
             resources=[stream_arn]
         ))
 
+        # Allow CW Agent to create Logs
+        _instance_role.add_to_policy(_iam.PolicyStatement(
+            actions=[
+                "logs:Create*",
+                "logs:PutLogEvents"
+            ],
+            resources=["arn:aws:logs:*:*:*"]
+        ))
+
+        # Allow Instance to read SSM Parameters
         stream_ssm_param.grant_read(_instance_role)
 
         # web_app_server Instance
