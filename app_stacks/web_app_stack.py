@@ -17,7 +17,7 @@ class global_args:
 
 class webAppStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, vpc, stream_name, stream_arn, ** kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, vpc, stream_name, stream_arn, stream_ssm_param, ** kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Read BootStrap Script):
@@ -65,6 +65,8 @@ class webAppStack(core.Stack):
             ],
             resources=[stream_arn]
         ))
+
+        stream_ssm_param.grant_read(_instance_role)
 
         # web_app_server Instance
         self.web_app_server = _ec2.Instance(self,

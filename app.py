@@ -24,6 +24,7 @@ web_app_stack = webAppStack(
     vpc=vpc_stack.vpc,
     stream_name=stream_processor.kinesis_stream_pipe.stream_name,
     stream_arn=stream_processor.kinesis_stream_pipe.stream_arn,
+    stream_ssm_param=stream_processor.stream_ssm_param,
     description="Web App: HTTP EndPoint on EC2 Stack")
 
 

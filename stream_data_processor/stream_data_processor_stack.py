@@ -1,5 +1,6 @@
 from aws_cdk import core
 from aws_cdk import aws_kinesis as _kinesis
+from aws_cdk import aws_ssm as _ssm
 
 
 class global_args:
@@ -31,6 +32,12 @@ class StreamDataProcessorStack(core.Stack):
             shard_count=1,
             stream_name="stream_pipe"
         )
+
+        self.stream_ssm_param = _ssm.StringParameter(self, "streamPipeParamter",
+                                                     description="Kinesis Stream Name",
+                                                     parameter_name="/streams_pipe/stream_name",
+                                                     string_value=f"{self.kinesis_stream_pipe.stream_name}"
+                                                     )
 
         output_0 = core.CfnOutput(self,
                                   "AutomationFrom",

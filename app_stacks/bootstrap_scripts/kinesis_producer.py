@@ -22,7 +22,7 @@ LOGGER = logging.getLogger()
 NO_OF_RECORDS = int(constants.NO_OF_RECORDS)
 FREQUENCY = int(constants.FREQUENCY)
 DURATION = int(constants.DURATION)
-STREAM_NAME = str(constants.STREAM_NAME)
+# STREAM_NAME = str(constants.STREAM_NAME)
 AWS_REGION = str(constants.AWS_REGION)
 # STREAM_NAME = os.getenv("STREAM_NAME", "stream_pipe")
 # AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
@@ -32,6 +32,15 @@ input_file = "data/covid19_india_04_apr_2020.json"
 
 client = boto3.client(
     'kinesis', region_name=AWS_REGION)
+ssm_client = boto3.client('ssm', region_name=AWS_REGION)
+
+
+res = ssm_client.get_parameter(
+    Name="/streams_pipe/stream_name",
+    WithDecryption=True
+)
+
+STREAM_NAME = res['Parameter']['Value']
 
 
 def _gen_uuid():
