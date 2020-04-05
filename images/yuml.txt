@@ -1,0 +1,5 @@
+[User | Data Producer]-->[Kinesis|Shards{bg:papayawhip}]
+
+[Kinesis|Shards{bg:green}]-->[ Consumer 001 | Lambda{bg:green}]
+
+[Kinesis|Shards{bg:green}]-->[ Consumer 002 | Lambda{bg:palegreen}]

@@ -1,0 +1,60 @@
+{
+    "metadata": {
+        "url": "https://tn.data.gov.in/resources/area-production-and-productivity-principal-crops-2015-16-shb-2017",
+        "description": "Area, Production and Productivity of Principal Crops 2015-16 : SHB 2017"
+    },
+    "fields": [
+        {
+            "id": "a",
+            "label": "Sl.No",
+            "type": "string"
+        },
+        {
+            "id": "b",
+            "label": "Category",
+            "type": "string"
+        },
+        {
+            "id": "c",
+            "label": "Consumption (M.U)",
+            "type": "string"
+        },
+        {
+            "id": "d",
+            "label": "Percentage of Consumption",
+            "type": "string"
+        }
+    ],
+    "data": [
+        [
+            "1",
+            "Industries (including Traction)",
+            "31872",
+            "38.39%"
+        ],
+        [
+            "2",
+            "Agriculture",
+            "11733",
+            "14.13%"
+        ],
+        [
+            "3",
+            "Domestic",
+            "24530",
+            "29.55%"
+        ],
+        [
+            "4",
+            "Commercial",
+            "9300",
+            "11.20%"
+        ],
+        [
+            "5",
+            "Miscellaneous",
+            "5585",
+            "6.73%"
+        ]
+    ]
+}

@@ -9,7 +9,7 @@ setuptools.setup(
     name="stream_data_processor",
     version="0.0.1",
 
-    description="An empty CDK Python app",
+    description="Processing streaming data",
     long_description=long_description,
     long_description_content_type="text/markdown",
 
@@ -19,7 +19,7 @@ setuptools.setup(
     packages=setuptools.find_packages(where="stream_data_processor"),
 
     install_requires=[
-        "aws-cdk.core==1.31.0",
+        "aws-cdk.core>=1.31.0",
     ],
 
     python_requires=">=3.6",

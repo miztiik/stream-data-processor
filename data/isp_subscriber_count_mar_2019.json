@@ -1,0 +1,75 @@
+{
+    "metadata": {
+        "url": "https://data.gov.in/resources/market-share-internet-subscribers-bsnl-compared-private-operators-31-march-2019-ministry",
+        "description": "Market Share of Internet Subscribers of BSNL as Compared to Private Operators as on 31 March, 2019 (From : Ministry of Communications"
+    },
+    "fields": [
+        {
+            "id": "a",
+            "label": "S.No.",
+            "type": "string"
+        },
+        {
+            "id": "b",
+            "label": "Internet Service Provider",
+            "type": "string"
+        },
+        {
+            "id": "c",
+            "label": "Share (%)",
+            "type": "string"
+        }
+    ],
+    "data": [
+        [
+            "1",
+            "Reliance JioInfocomm Ltd",
+            "48.17"
+        ],
+        [
+            "2",
+            "Vodafone Idea Limited",
+            "22.98"
+        ],
+        [
+            "3",
+            "Bharti Airtel Ltd.",
+            "22.41"
+        ],
+        [
+            "4",
+            "Bharat Sanchar Nigam Ltd.",
+            "4.73"
+        ],
+        [
+            "5",
+            "Tata Teleservices Limited",
+            "0.48"
+        ],
+        [
+            "6",
+            "Atria Convergence Technologies Pvt. Ltd.",
+            "0.22"
+        ],
+        [
+            "7",
+            "Mahanagar Telephone Nigam Ltd",
+            "0.2"
+        ],
+        [
+            "8",
+            "Hathway Cable & Datacom Pvt. Ltd.",
+            "0.13"
+        ],
+        [
+            "9",
+            "You Broadband India Pvt. Ltd.",
+            "0.12"
+        ],
+        [
+            "10",
+            "GTPL Broadband Pvt. Ltd.",
+            "0.04"
+        ]
+    ]
+}

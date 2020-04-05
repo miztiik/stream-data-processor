@@ -1,0 +1,92 @@
+{
+    "metadata": {
+        "url": "https://data.gov.in/catalog/status-farm-machinery-industries-india",
+        "description": "status-farm-machinery-industries-india"
+    },
+    "fields": [
+        {
+            "id": "a",
+            "label": "Equipment manufacturers",
+            "type": "string"
+        },
+        {
+            "id": "b",
+            "label": "Number ",
+            "type": "string"
+        }
+    ],
+    "data": [
+        [
+            "Agricultural tractors",
+            "13"
+        ],
+        [
+            "Power tillers",
+            "2"
+        ],
+        [
+            "Earth movers",
+            "3"
+        ],
+        [
+            "Pumps",
+            "600"
+        ],
+        [
+            "Micro-irrigation system",
+            "70"
+        ],
+        [
+            "Plant protection equipment",
+            "300"
+        ],
+        [
+            "Combines harvesters",
+            "48"
+        ],
+        [
+            "Reapers",
+            "60"
+        ],
+        [
+            "Threshers",
+            "6000"
+        ],
+        [
+            "Seed drills",
+            "2500"
+        ],
+        [
+            "Ploughs, cultivators and harrows",
+            "5000"
+        ],
+        [
+            "Tractors parts and accessories",
+            "546"
+        ],
+        [
+            "Earth moving machinery and parts",
+            "188"
+        ],
+        [
+            "Diesel oil engines",
+            "200"
+        ],
+        [
+            "Rice processing machinery",
+            "300"
+        ],
+        [
+            "Sugarcane crusher",
+            "50"
+        ],
+        [
+            "Chaff cutter",
+            "50"
+        ],
+        [
+            "Dairy and food industries",
+            "500"
+        ]
+    ]
+}

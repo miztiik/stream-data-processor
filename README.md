@@ -1,58 +1,99 @@
+# Process Streaming Data using Kinesis
 
-# Welcome to your CDK Python project!
+Sample project to ingest data into kinesis shard and read using different lambda, as you will do in a fan-out architecture.
 
-This is a blank project for Python development with CDK.
+  ![Miztiik Serverless Lambda Profiler AWS XRay](images/miztiik-stream-data-processor-architecture-00.png)
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+  Follow this article in **[Youtube](https://www.youtube.com/c/ValaxyTechnologies)**
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the .env
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+1. ## 🧰 Prerequisites
 
-To manually create a virtualenv on MacOS and Linux:
+    This demo, instructions, scripts and cloudformation template is designed to be run in `us-east-1`. With few modifications you can try it out in other regions as well(_Not covered here_).
 
-```
-$ python3 -m venv .env
-```
+    - AWS CLI pre-configured - [Get help here](https://youtu.be/TPyyfmQte0U)
+    - AWS CDK Installed & Configured - [Get help here](https://www.youtube.com/watch?v=MKwxpszw0Rc)
+    - Python Packages, _Change the below commands to suit your OS, the following is written for amzn linux 2_
+        - Python3 - `yum install -y python3`
+        - Python Pip - `yum install -y python-pip`
+        - Virtualenv - `pip3 install virtualenv`
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+1. ## ⚙️ Setting up the environment
 
-```
-$ source .env/bin/activate
-```
+    - Get the application code
 
-If you are a Windows platform, you would activate the virtualenv like this:
+        ```bash
+        git clone https://github.com/miztiik/stream-data-processor.git
+        cd stream-data-processor
+        ```
 
-```
-% .env\Scripts\activate.bat
-```
+1. ## 🚀 Resource Deployment using AWS CDK
 
-Once the virtualenv is activated, you can install the required dependencies.
+    The cdk stack provided in the repo will create the following resources,
+    - VPC with public & private subnets, route tables, security group and nacl.
+    - EC2 Instance that ingests data into the kinesis shards
+        - Data comes from covid19 patients list <sup>#Reference</sup>
+    - Lambda function[s] as kinesis consumer
 
-```
-$ pip install -r requirements.txt
-```
+    ```bash
+    # If you DONT have cdk installed
+    npm install -g aws-cdk
 
-At this point you can now synthesize the CloudFormation template for this code.
+    # Make sure you in root directory
+    python3 -m venv .env
+    source .env/bin/activate
+    pip3 install -r requirements.txt
+    ```
 
-```
-$ cdk synth
-```
+    The very first time you deploy an AWS CDK app into an environment _(account/region)_, you’ll need to install a `bootstrap stack`, Otherwise just go aheadand   deploy using `cdk deploy`.
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
+    ```bash
+    cdk bootstrap
+    cdk deploy stream-data-processor
+    # Follow onscreen prompts
+    ```
 
-## Useful commands
+1. ## 🔬 Testing the solution
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
+    The _Outputs_ section of the Clouformation template/service has the required information.
 
-Enjoy!
+    - Connect to the EC2 instance using Session Manager - [Get help here](https://www.youtube.com/watch?v=-ASMtZBrx-k)
+        - Update the `app_stacks/bootstrap_scripts/constants.py` with desired values
+        - Run the `kinesis_producer.py`
+
+        ```bash
+        cd stream-data-processor/app_stacks/bootstrap_scripts/
+        python3 kinesis_producer.py
+        ```
+
+1. ## 🧹 CleanUp
+
+    If you want to destroy all the resources created by the stack, Execute the below command to delete the stack, or _you can delete the stack from console as well_
+
+    - Resources created during [deployment](#🚀-resource-deployment-using-aws-cdk)
+    - Delete CloudWatch Lambda LogGroups
+    - _Any other custom resources, you have created for this demo_
+
+    ```bash
+    # Delete from cdk
+    cdk destroy
+
+    # Delete the CF Stack, If you used cloudformation to deploy the stack.
+    aws cloudformation delete-stack \
+        --stack-name "MiztiikAutomationStack" \
+        --region "${AWS_REGION}"
+    ```
+
+    This is not an exhaustive list, please carry out other necessary steps as maybe applicable to your needs.
+
+## 👋 Buy me a coffee
+
+[Buy me](https://paypal.me/valaxy) a coffee ☕, _or_ You can reach out to get more details through [here](https://youtube.com/c/valaxytechnologies/about).
+
+### 📚 References
+
+1. [AWS Blog](https://dataprocessing.wildrydes.com/streaming-data.html)
+1. [Kinesis Security - IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html)
+
+### 🏷️ Metadata
+
+**Level**: 300

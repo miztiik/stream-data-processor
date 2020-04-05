@@ -1,7 +1,19 @@
 {
   "app": "python3 app.py",
+  "versionReporting": false,
   "context": {
-    "@aws-cdk/core:enableStackNameDuplicates": "true",
-    "aws-cdk:enableDiffNoFail": "true"
+    "owner": "Mystique",
+    "app_name": "stream-data-processor",
+    "github_repo_url": "https://github.com/miztiik/stream-data-processor",
+    "github_profile": "https://github.com/miztiik",
+    "youtube_profile": "https://youtube.com/c/valaxytechnologies",
+    "deploy": "--require-approval never",
+    "destroy": "--force",
+    "envs": {
+      "dev": {
+        "region": "us-east-1",
+        "account": ""
+      }
+    }
   }
 }

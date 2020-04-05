@@ -1,0 +1,224 @@
+{
+    "metadata": {
+        "url": "https://tn.data.gov.in/resources/areaproduction-and-productivity-principal-crops-2014-15",
+        "description": "Area,Production and Productivity of Principal Crops 2014-15"
+    },
+    "fields": [
+        {
+            "id": "a",
+            "label": "S.No",
+            "type": "string"
+        },
+        {
+            "id": "b",
+            "label": "Crop",
+            "type": "string"
+        },
+        {
+            "id": "c",
+            "label": "Area (Hect)",
+            "type": "string"
+        },
+        {
+            "id": "d",
+            "label": "Production (Tonnes)",
+            "type": "string"
+        },
+        {
+            "id": "e",
+            "label": "Productivity (in Kg.\/Hec.)",
+            "type": "string"
+        }
+    ],
+    "data": [
+        [
+            "1a",
+            "Paddy *(CEREALS)",
+            "1794991",
+            "7949437",
+            "4429"
+        ],
+        [
+            "1b",
+            "Cholam(Jowar)(CEREALS)",
+            "415103",
+            "868940",
+            "2093"
+        ],
+        [
+            "1c",
+            "Cumbu (Bajra)(CEREALS)",
+            "57708",
+            "177570",
+            "3077"
+        ],
+        [
+            "1d",
+            "Ragi (CEREALS)",
+            "104426",
+            "349628",
+            "3348"
+        ],
+        [
+            "1e",
+            "Maize (CEREALS)",
+            "321952",
+            "2647751",
+            "8224"
+        ],
+        [
+            "1f",
+            "Small Millets (CEREALS)",
+            "27656",
+            "34923",
+            "1139"
+        ],
+        [
+            "Total",
+            "Total Cereals",
+            "2721836",
+            "12028249",
+            "4419"
+        ],
+        [
+            "2a",
+            "Bengal gram (PULSES)",
+            "6820",
+            "4177",
+            "645"
+        ],
+        [
+            "2b",
+            "Red gram (PULSES)",
+            "72389",
+            "90950",
+            "1256"
+        ],
+        [
+            "2c",
+            "Green gram (PULSES)",
+            "229561",
+            "180726",
+            "787"
+        ],
+        [
+            "2d",
+            "Black gram (PULSES)",
+            "373782",
+            "358895",
+            "960"
+        ],
+        [
+            "2e",
+            "Horse gram (PULSES)",
+            "92062",
+            "68304",
+            "742"
+        ],
+        [
+            "2f",
+            "Other Pulses",
+            "109248",
+            "63912",
+            "585"
+        ],
+        [
+            "2g",
+            "Total Pulses ",
+            "883862",
+            "766964",
+            "868"
+        ],
+        [
+            "Total",
+            "Total Foodgrains (A+B)",
+            "3605698",
+            "12795213",
+            "3549"
+        ],
+        [
+            "3a",
+            "Groundnut (OIL SEEDS)",
+            "336514",
+            "925182",
+            "2753"
+        ],
+        [
+            "3b",
+            "Gingelly (OIL SEEDS)",
+            "64242",
+            "44748",
+            "697"
+        ],
+        [
+            "3c",
+            "Coconut @ (OIL SEEDS)",
+            "427841",
+            "49865",
+            "11655"
+        ],
+        [
+            "3d",
+            "Castor (OIL SEEDS)",
+            "5132",
+            "1695",
+            "312"
+        ],
+        [
+            "3e",
+            "Other Oil Seeds ",
+            "14798",
+            "NA",
+            " NA"
+        ],
+        [
+            "Total",
+            "Total Oil Seeds",
+            "848527",
+            "NA",
+            "NA"
+        ],
+        [
+            "4a",
+            "Cotton #",
+            "186693",
+            "598939",
+            "545"
+        ],
+        [
+            "4b",
+            "Sugarcane **",
+            "263066",
+            "28092784",
+            "107"
+        ],
+        [
+            "4c",
+            "Tobacco",
+            "5478",
+            "8334",
+            "1526"
+        ],
+        [
+            "4d",
+            "Chillies ",
+            "44606",
+            "29391",
+            "661"
+        ],
+        [
+            "4e",
+            "All other crops",
+            "1040433",
+            "NA",
+            "NA "
+        ],
+        [
+            "Total",
+            "Total (Other Crops)",
+            "1540276",
+            "NA",
+            "NA"
+        ]
+    ]
+}
