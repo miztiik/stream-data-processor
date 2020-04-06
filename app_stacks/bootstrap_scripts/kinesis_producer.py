@@ -29,8 +29,18 @@ FREQUENCY = int(constants.FREQUENCY)
 DURATION = int(constants.DURATION)
 # STREAM_NAME = str(constants.STREAM_NAME)
 AWS_REGION = str(constants.AWS_REGION)
-# STREAM_NAME = os.getenv("STREAM_NAME", "stream_pipe")
+# STREAM_NAME = os.getenv("STREAM_NAME", "data_pipe")
 # AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
+
+
+class global_args:
+    """
+    Helper to define global statics
+    """
+    OWNER = "MystiqueAutomation"
+    REPO_NAME = "stream-data-processor"
+    SOURCE_INFO = f"https://github.com/miztiik/{REPO_NAME}"
+    VERSION = "2020_04_05"
 
 
 input_file = "./../../data/covid19_india_04_apr_2020.json"
@@ -40,8 +50,9 @@ client = boto3.client(
 ssm_client = boto3.client('ssm', region_name=AWS_REGION)
 
 
+
 res = ssm_client.get_parameter(
-    Name="/streams_pipe/stream_name",
+    Name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
     WithDecryption=True
 )
 

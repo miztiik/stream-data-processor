@@ -93,7 +93,7 @@ cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EO
         "collect_list": [
         {
             "file_path": "/var/log/stream-data-processor",
-            "log_group_name": "/Mystique/Automation/{instance_id}",
+            "log_group_name": "/Mystique/DataStreamAutomation/{instance_id}",
             "timestamp_format": "%b %-d %H:%M:%S",
             "timezone": "Local"
         }

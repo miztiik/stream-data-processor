@@ -25,18 +25,24 @@ class StreamDataProcessorStack(core.Stack):
         ################# OUTPUTS #################
         ###########################################
 
-        self.kinesis_stream_pipe = _kinesis.Stream(
+        self.kinesis_data_pipe = _kinesis.Stream(
             self,
-            "streamPipe",
+            "dataPipe",
             retention_period_hours=24,
             shard_count=1,
-            stream_name="stream_pipe"
+            stream_name="data_pipe"
         )
 
-        self.stream_ssm_param = _ssm.StringParameter(self, "streamPipeParamter",
+        self.stream_ssm_param = _ssm.StringParameter(self, "dataPipeParamter1",
                                                      description="Kinesis Stream Name",
                                                      parameter_name="/streams_pipe/stream_name",
-                                                     string_value=f"{self.kinesis_stream_pipe.stream_name}"
+                                                     string_value=f"{self.kinesis_data_pipe.stream_name}"
+                                                     )
+
+        self.data_pipe_ssm_param = _ssm.StringParameter(self, "dataPipeParamter",
+                                                     description="Kinesis Stream Name",
+                                                     parameter_name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
+                                                     string_value=f"{self.kinesis_data_pipe.stream_name}"
                                                      )
 
         output_0 = core.CfnOutput(self,
