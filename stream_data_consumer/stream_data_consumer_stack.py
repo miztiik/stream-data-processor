@@ -1,7 +1,6 @@
 from aws_cdk import aws_iam as _iam
 from aws_cdk import aws_lambda as _lambda
 from aws_cdk import aws_cloudwatch as _cloudwatch
-from aws_cdk import aws_s3 as _s3
 from aws_cdk import aws_logs as _logs
 from aws_cdk import core
 
@@ -26,7 +25,7 @@ class streamDataConsumerStack(core.Stack):
         ###########################################
         with open("stream_data_consumer/lambda_src/stream_record_processor.py", encoding="utf8") as fp:
             stream_record_processor_fn_handler_code = fp.read()
-        stream_record_processor_fn = _lambda.Function(
+        self.stream_record_processor_fn = _lambda.Function(
             self,
             id='streamDataProcessor',
             function_name="stream_record_processor_fn",
@@ -52,20 +51,20 @@ class streamDataConsumerStack(core.Stack):
             ]
         )
         roleStmt1.sid = "AllowKinesisToTriggerLambda"
-        stream_record_processor_fn.add_to_role_policy(roleStmt1)
+        self.stream_record_processor_fn.add_to_role_policy(roleStmt1)
 
-        stream_record_processor_fn.add_event_source_mapping("dataPipeConsumer",
-                                                            event_source_arn=stream_arn,
-                                                            batch_size=2,
-                                                            enabled=True,
-                                                            starting_position=_lambda.StartingPosition.TRIM_HORIZON
-                                                            )
+        self.stream_record_processor_fn.add_event_source_mapping("dataPipeConsumer",
+                                                                 event_source_arn=stream_arn,
+                                                                 batch_size=2,
+                                                                 enabled=True,
+                                                                 starting_position=_lambda.StartingPosition.TRIM_HORIZON
+                                                                 )
         ###########################################
         #####      KINESIS CONSUMER 2       #######
         ###########################################
         with open("stream_data_consumer/lambda_src/stream_record_processor.js", encoding="utf8") as fp:
             stream_record_processor_fn_2_handler_code = fp.read()
-        stream_record_processor_fn_2 = _lambda.Function(
+        self.stream_record_processor_fn_2 = _lambda.Function(
             self,
             id='streamDataProcessor2',
             function_name="stream_record_processor_fn_2",
@@ -79,57 +78,14 @@ class streamDataConsumerStack(core.Stack):
             }
         )
 
-        stream_record_processor_fn_2.add_to_role_policy(roleStmt1)
+        self.stream_record_processor_fn_2.add_to_role_policy(roleStmt1)
 
-        stream_record_processor_fn_2.add_event_source_mapping("dataPipeConsumer",
-                                                              event_source_arn=stream_arn,
-                                                              batch_size=2,
-                                                              enabled=True,
-                                                              starting_position=_lambda.StartingPosition.TRIM_HORIZON
-                                                              )
-        ##### MONITORING ######
-        # JSON Metric Filter - https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html
-
-        record_count_metric = _cloudwatch.Metric(
-            namespace=f"{global_args.OWNER}-stream-data-processor",
-            metric_name="processedRecordCount",
-            label="Total No. Of Records Processed",
-            period=core.Duration.minutes(1),
-            statistic="Sum"
-        )
-
-        record_count_metric_filter_01 = _logs.MetricFilter(self, "processedRecordCountFilter01",
-                                                           filter_pattern=_logs.FilterPattern.exists(
-                                                               "$.sum_of_records"),
-                                                           log_group=stream_record_processor_fn.log_group,
-                                                           metric_namespace=record_count_metric.namespace,
-                                                           metric_name=record_count_metric.metric_name,
-                                                           default_value=0,
-                                                           metric_value="$.sum_of_records",
-                                                           )
-
-        record_count_metric_filter_02 = _logs.MetricFilter(self, "processedRecordCountFilter02",
-                                                           filter_pattern=_logs.FilterPattern.exists(
-                                                               "$.sum_of_records"),
-                                                           log_group=stream_record_processor_fn_2.log_group,
-                                                           metric_namespace=record_count_metric.namespace,
-                                                           metric_name=record_count_metric.metric_name,
-                                                           default_value=0,
-                                                           metric_value="$.sum_of_records",
-                                                           )
-
-        # Create CloudWatch Dashboard for Polyglot Service Team
-        stream_processor_dashboard = _cloudwatch.Dashboard(self,
-                                                           id="streamProcessorDashboard",
-                                                           dashboard_name="Stream-Processor"
-                                                           )
-
-        stream_processor_dashboard.add_widgets(
-            _cloudwatch.SingleValueWidget(
-                title="TotalRecordsProcessed",
-                metrics=[record_count_metric]
-            )
-        )
+        self.stream_record_processor_fn_2.add_event_source_mapping("dataPipeConsumer",
+                                                                   event_source_arn=stream_arn,
+                                                                   batch_size=2,
+                                                                   enabled=True,
+                                                                   starting_position=_lambda.StartingPosition.TRIM_HORIZON
+                                                                   )
 
         ###########################################
         ################# OUTPUTS #################

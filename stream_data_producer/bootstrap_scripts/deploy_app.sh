@@ -62,6 +62,7 @@ function install_cw_agent(){
 
 # PARAM_NAME="/stream-data-processor/streams/data_pipe/stream_name"
 # a=$(aws ssm get-parameter --name "$PARAM_NAME" --with-decryption --query "Parameter.{Value:Value}" --output text)
+# LOG_GROUP_NAME="/stream-data-processor/producers"
 
 cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EOF"
 {
@@ -96,7 +97,7 @@ cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EO
         "collect_list": [
         {
             "file_path": "/var/log/stream-data-processor",
-            "log_group_name": "/Mystique/DataStreamAutomation/{instance_id}",
+            "log_group_name": "/stream-data-processor/producers",
             "timestamp_format": "%b %-d %H:%M:%S",
             "timezone": "Local"
         }
@@ -122,5 +123,5 @@ install_libs
 clone_git_repo
 add_env_vars
 install_cw_agent
-cd /var/stream-data-processor/app_stacks/bootstrap_scripts/
-python3 /var/stream-data-processor/app_stacks/bootstrap_scripts/kinesis_producer.py
+cd /var/stream-data-processor/stream_data_producer/bootstrap_scripts/
+python3 /var/stream-data-processor/stream_data_producer/bootstrap_scripts/kinesis_producer.py

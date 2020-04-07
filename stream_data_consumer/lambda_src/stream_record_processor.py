@@ -47,7 +47,7 @@ def lambda_handler(event, context):
                 # Kinesis data is base64 encoded so decode here
                 payload = base64.b64decode(record["kinesis"]["data"])
                 LOGGER.info(f"Decoded payload: {str(payload)}")
-            LOGGER.info(f'{{"sum_of_records":{len(event.get("""Records"""))}}}')
+            LOGGER.info(f'{{"records_processed":{len(event.get("""Records"""))}}}')
             resp["status"] = True
     except Exception as e:
         LOGGER.error(f"ERROR:{str(e)}")

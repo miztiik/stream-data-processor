@@ -33,7 +33,7 @@ class StreamDataPipeStack(core.Stack):
             stream_name="data_pipe"
         )
 
-        self.data_pipe_ssm_param = _ssm.StringParameter(self, "dataPipeParamter",
+        self.data_pipe_ssm_param = _ssm.StringParameter(self, "dataPipeParameter",
                                                         description="Kinesis Stream Name",
                                                         parameter_name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
                                                         string_value=f"{self.kinesis_data_pipe.stream_name}"

@@ -49,7 +49,6 @@ client = boto3.client(
 ssm_client = boto3.client('ssm', region_name=AWS_REGION)
 
 
-
 res = ssm_client.get_parameter(
     Name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
     WithDecryption=True
@@ -111,7 +110,6 @@ def auto_send_records():
     # Get epoch time in seconds
     start_time = int(time.time())
     while True:
-
         for i in range(NO_OF_RECORDS):
             d = {}
             r = random.randint(0, p_len)
@@ -129,10 +127,11 @@ def auto_send_records():
             f"Pause sending records to match frequency, Sending every {FREQUENCY} seconds")
         curr_time = int(time.time())
         elapsed_time = curr_time - start_time
-        LOGGER.info(f"Total No. of Records Sent:{tot_records}")
-        LOGGER.info(f"Elapsed Time:{elapsed_time}")
+        # LOGGER.info(f'{{"records_produced":{tot_records},"elapsed_time":{elapsed_time}}}')
         LOGGER.info(f"Remaining Time:{DURATION - elapsed_time}")
         if elapsed_time >= DURATION:
+            LOGGER.info(
+                f'{{"records_produced":{tot_records},"elapsed_time":{elapsed_time}}}')
             break
 
 

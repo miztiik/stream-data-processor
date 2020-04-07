@@ -7,5 +7,5 @@ exports.handler = function (event, context) {
         var payload = Buffer.from(record.kinesis.data, 'base64').toString('ascii');
         console.log('Decoded payload:', payload);
     });
-    console.log('{"sum_of_records": %s}', event.Records.length)
+    console.log('{"records_processed": %s}', event.Records.length)
 };

@@ -6,6 +6,7 @@ from stream_data_pipe.stream_data_pipe_stack import StreamDataPipeStack
 from stream_data_producer.vpc_stack import VpcStack
 from stream_data_producer.stream_data_producer_stack import streamDataProducerStack
 from stream_data_consumer.stream_data_consumer_stack import streamDataConsumerStack
+from stream_monitor.stream_monitor_stack import streamMonitorStack
 
 app = core.App()
 
@@ -13,6 +14,12 @@ app = core.App()
 stream_pipe = StreamDataPipeStack(
     app, "stream-data-pipe", description="Kinesis Streams for recieving streaming data")
 
+# Kinesis Data Stream Consumer Stack
+stream_consumer = streamDataConsumerStack(
+    app, "stream-data-consumer-stack",
+    stream_arn=stream_pipe.kinesis_data_pipe.stream_arn,
+    description="Kinesis Data Stream Consumer Stack"
+)
 
 # VPC Stack for hosting EC2 & Other resources
 vpc_stack = VpcStack(app, "web-app-vpc-stack",
@@ -28,14 +35,14 @@ stream_producer = streamDataProducerStack(
     description="Web App: Kinesis Data Producer on EC2 Stack"
 )
 
-
-# Kinesis Data Stream Consumer Stack
-stream_consumer = streamDataConsumerStack(
-    app, "stream-data-consumer-stack",
-    stream_arn=stream_pipe.kinesis_data_pipe.stream_arn,
-    description="Kinesis Data Stream Consumer Stack"
+# CloudWatch Dashboard for Stream Metrics
+stream_monitor = streamMonitorStack(
+    app, "stream-data-producer-monitor-stack",
+    stream_producer_lg=stream_producer.stream_producer_lg,
+    stream_record_processor_fn=stream_consumer.stream_record_processor_fn,
+    stream_record_processor_fn_2=stream_consumer.stream_record_processor_fn_2,
+    description="CloudWatch Dashboard for Stream Data Producer Metrics"
 )
-
 
 # Stack Level Tagging
 core.Tag.add(app, key="Owner",

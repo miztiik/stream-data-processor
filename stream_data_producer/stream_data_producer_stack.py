@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from aws_cdk import aws_ec2 as _ec2
 from aws_cdk import aws_iam as _iam
+from aws_cdk import aws_logs as _logs
+from aws_cdk import aws_ssm as _ssm
 from aws_cdk import core
 
 
@@ -19,6 +21,23 @@ class streamDataProducerStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, vpc, stream_arn, data_pipe_ssm_param, ** kwargs) -> None:
         super().__init__(scope, id, **kwargs)
+
+        # CloudWatch LogGroup for Stream Producer):
+
+        self.stream_producer_lg = _logs.LogGroup(
+            self,
+            "streamProducerLoggroup",
+            log_group_name=(
+                f"/{global_args.REPO_NAME}"
+                f"/producers"
+            )
+        )
+
+        self.data_pipe__producer_lg_ssm_param = _ssm.StringParameter(self, "dataPipeLgParameter",
+                                                                     description="Kinesis Stream Name",
+                                                                     parameter_name=f"/{global_args.REPO_NAME}/streams/data_pipe/produce/log_group_name",
+                                                                     string_value=f"{self.stream_producer_lg.log_group_name}"
+                                                                     )
 
         # Read BootStrap Script):
         try:
@@ -102,6 +121,11 @@ class streamDataProducerStack(core.Stack):
         self.web_app_server.connections.allow_from_any_ipv4(
             _ec2.Port.tcp(443), description="Allow Secured Web Traffic"
         )
+
+        # Add dependency for the CW Log group before creating the server
+        core.Tag.add(self.web_app_server, key="CustomLogGroup", value=f"{self.stream_producer_lg.log_group_name}",
+                     include_resource_types=[])
+
         ###########################################
         ################# OUTPUTS #################
         ###########################################
