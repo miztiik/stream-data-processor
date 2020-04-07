@@ -13,9 +13,9 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
 
-    author="author",
+    author="Mystique",
 
-    package_dir={"": "stream_data_processor"},
+    package_dir={"": "stream_data_pipe"},
     packages=setuptools.find_packages(where="stream_data_processor"),
 
     install_requires=[

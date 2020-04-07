@@ -14,7 +14,7 @@ class global_args:
     POLYGLOT_SUPPORT_EMAIL = ["mystique@example.com", ]
 
 
-class StreamDataProcessorStack(core.Stack):
+class StreamDataPipeStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
@@ -33,17 +33,11 @@ class StreamDataProcessorStack(core.Stack):
             stream_name="data_pipe"
         )
 
-        self.stream_ssm_param = _ssm.StringParameter(self, "dataPipeParamter1",
-                                                     description="Kinesis Stream Name",
-                                                     parameter_name="/streams_pipe/stream_name",
-                                                     string_value=f"{self.kinesis_data_pipe.stream_name}"
-                                                     )
-
         self.data_pipe_ssm_param = _ssm.StringParameter(self, "dataPipeParamter",
-                                                     description="Kinesis Stream Name",
-                                                     parameter_name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
-                                                     string_value=f"{self.kinesis_data_pipe.stream_name}"
-                                                     )
+                                                        description="Kinesis Stream Name",
+                                                        parameter_name=f"/{global_args.REPO_NAME}/streams/data_pipe/stream_name",
+                                                        string_value=f"{self.kinesis_data_pipe.stream_name}"
+                                                        )
 
         output_0 = core.CfnOutput(self,
                                   "AutomationFrom",

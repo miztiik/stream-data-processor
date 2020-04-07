@@ -15,19 +15,19 @@ class global_args:
     POLYGLOT_SUPPORT_EMAIL = ["mystique@example.com", ]
 
 
-class webAppStack(core.Stack):
+class streamDataProducerStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, vpc, stream_name, stream_arn, stream_ssm_param, ** kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, vpc, stream_arn, data_pipe_ssm_param, ** kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Read BootStrap Script):
         try:
-            with open("app_stacks/bootstrap_scripts/deploy_app.sh", mode="r") as file:
-                file_data = file.read()
+            with open("stream_data_producer/bootstrap_scripts/deploy_app.sh", mode="r") as file:
+                user_data = file.read()
 
             # Let us add the stream name to our user_data script
             # Ideally can also use SSM Parameter Store
-            user_data = file_data + f"export STREAM_NAME='{stream_name}'"
+            # user_data = file_data + f"export STREAM_PARAM_NAME='{data_pipe_ssm_param}'"
 
         except OSError:
             print('Unable to read UserData script')
@@ -76,7 +76,7 @@ class webAppStack(core.Stack):
         ))
 
         # Allow Instance to read SSM Parameters
-        stream_ssm_param.grant_read(_instance_role)
+        data_pipe_ssm_param.grant_read(_instance_role)
 
         # web_app_server Instance
         self.web_app_server = _ec2.Instance(self,

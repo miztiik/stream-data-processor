@@ -60,6 +60,9 @@ function install_cw_agent(){
 
     cw_agent_schema="/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
 
+# PARAM_NAME="/stream-data-processor/streams/data_pipe/stream_name"
+# a=$(aws ssm get-parameter --name "$PARAM_NAME" --with-decryption --query "Parameter.{Value:Value}" --output text)
+
 cat > '/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json' << "EOF"
 {
 "agent": {

@@ -92,7 +92,10 @@ Sample project to ingest data into kinesis shard and read using different lambda
 ### 📚 References
 
 1. [AWS Blog](https://dataprocessing.wildrydes.com/streaming-data.html)
+
 1. [Kinesis Security - IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html)
+1. [Kinesis Consumers](https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis-create-package.html)
+1. [Metric Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
 
 ### 🏷️ Metadata
 
