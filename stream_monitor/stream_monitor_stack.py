@@ -33,7 +33,7 @@ class streamMonitorStack(core.Stack):
             ],
             metric_name="recordsProducedCount",
             label="Total No. Of Records Produced",
-            period=core.Duration.minutes(1),
+            period=core.Duration.minutes(30),
             statistic="Sum"
         )
 
@@ -61,9 +61,9 @@ class streamMonitorStack(core.Stack):
                 "records_processed",
                 "records_processed"
             ],
-            metric_name="processedRecordCount",
+            metric_name="recordsProcessedCount",
             label="Total No. Of Records Processed",
-            period=core.Duration.minutes(1),
+            period=core.Duration.minutes(30),
             statistic="Sum"
         )
 

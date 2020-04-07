@@ -17,7 +17,8 @@ logging.basicConfig(filename=f"{constants.LOG_FILE_NAME}",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
-                    level=logging.INFO)
+                    level=os.getenv('LOG_LEVEL', 'INFO').upper()
+                    )
 LOGGER = logging.getLogger()
 
 ##################################################

@@ -6,7 +6,11 @@
 #############     SET GLOBALS     ################
 ##################################################
 
-GIT_REPO_URL="https://github.com/miztiik/stream-data-processor.git"
+REPO_NAME="stream-data-processor"
+
+GIT_REPO_URL="https://github.com/miztiik/$REPO_NAME.git"
+
+APP_DIR="/var/$REPO_NAME"
 
 # Send logs to console
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
@@ -36,8 +40,8 @@ function add_env_vars(){
     EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
     AWS_REGION="`echo \"$EC2_AVAIL_ZONE\" | sed 's/[a-z]$//'`"
     export AWS_REGION
-    echo "AWS_REGION='$AWS_REGION'" >> "/var/stream-data-processor/app_stacks/bootstrap_scripts/constants.py"
-    echo "STREAM_NAME='$STREAM_NAME'" >> "/var/stream-data-processor/app_stacks/bootstrap_scripts/constants.py"
+    echo "AWS_REGION='$AWS_REGION'" >> "$APP_DIR/stream_data_producer/bootstrap_scripts/constants.py"
+    echo "STREAM_NAME='$STREAM_NAME'" >> "$APP_DIR/stream_data_producer/bootstrap_scripts/constants.py"
 }
 
 function install_libs(){
@@ -123,5 +127,5 @@ install_libs
 clone_git_repo
 add_env_vars
 install_cw_agent
-cd /var/stream-data-processor/stream_data_producer/bootstrap_scripts/
-python3 /var/stream-data-processor/stream_data_producer/bootstrap_scripts/kinesis_producer.py
+cd "$APP_DIR/stream_data_producer/bootstrap_scripts/"
+python3 "$APP_DIR/stream_data_producer/bootstrap_scripts/kinesis_producer.py"
