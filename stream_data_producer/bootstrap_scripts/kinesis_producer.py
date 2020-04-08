@@ -28,6 +28,7 @@ LOGGER = logging.getLogger()
 NO_OF_RECORDS = int(constants.NO_OF_RECORDS)
 FREQUENCY = int(constants.FREQUENCY)
 DURATION = int(constants.DURATION)
+DELAY = int(constants.DELAY)
 AWS_REGION = str(constants.AWS_REGION)
 # STREAM_NAME = os.getenv("STREAM_NAME", "data_pipe")
 # AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
@@ -120,9 +121,11 @@ def auto_send_records():
             d["age_bracket"] = p_data[r]["age_bracket"]
             d["gender"] = p_data[r]["gender"]
             send_data(client, d, _gen_uuid(), STREAM_NAME)
-            time.sleep(1)
+            # Delay between records
+            time.sleep(DELAY)
             # LOGGER.info("Sleeping for 1 second between records")
             tot_records += 1
+        # Frequency, between 'batch of records'
         time.sleep(FREQUENCY)
         LOGGER.info(
             f"Pause sending records to match frequency, Sending every {FREQUENCY} seconds")

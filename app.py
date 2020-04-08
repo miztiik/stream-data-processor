@@ -12,7 +12,10 @@ app = core.App()
 
 # Kinesis Data Stream Processor Stack
 stream_pipe = StreamDataPipeStack(
-    app, "stream-data-pipe", description="Kinesis Streams for recieving streaming data")
+    app, "stream-data-pipe",
+    shard_count=2,
+    description="Kinesis Streams for recieving streaming data"
+)
 
 # Kinesis Data Stream Consumer Stack
 stream_consumer = streamDataConsumerStack(
