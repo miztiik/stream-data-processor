@@ -20,15 +20,15 @@ class StreamDataPipeStack(core.Stack):
         super().__init__(scope, id, **kwargs)
 
         # The code that defines your stack goes here):
-
-        ###########################################
-        ################# OUTPUTS #################
-        ###########################################
+        ##############################################
+        #######   CDK STABILITY EXPERIMENTAL   #######
+        ##############################################
 
         self.kinesis_data_pipe = _kinesis.Stream(
             self,
             "dataPipe",
-            retention_period_hours=24,
+            # retention_period_hours=24,
+            # retention_period=core.Duration.minutes(300),
             shard_count=1,
             stream_name="data_pipe"
         )
