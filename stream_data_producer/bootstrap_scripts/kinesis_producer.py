@@ -128,10 +128,13 @@ def auto_send_records():
             f"Pause sending records to match frequency, Sending every {FREQUENCY} seconds")
         curr_time = int(time.time())
         elapsed_time = curr_time - start_time
+        print(f'{{"records_in_progress":{tot_records},"elapsed_time":{elapsed_time}}}')
         # LOGGER.info(f'{{"records_produced":{tot_records},"elapsed_time":{elapsed_time}}}')
         LOGGER.info(f"Remaining Time:{DURATION - elapsed_time}")
         if elapsed_time >= DURATION:
             LOGGER.info(
+                f'{{"records_produced":{tot_records},"elapsed_time":{elapsed_time}}}')
+            print(
                 f'{{"records_produced":{tot_records},"elapsed_time":{elapsed_time}}}')
             break
 

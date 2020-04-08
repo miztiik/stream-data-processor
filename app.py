@@ -39,8 +39,9 @@ stream_producer = streamDataProducerStack(
 stream_monitor = streamMonitorStack(
     app, "stream-data-producer-monitor-stack",
     stream_producer_lg=stream_producer.stream_producer_lg,
-    stream_record_processor_fn=stream_consumer.stream_record_processor_fn,
-    stream_record_processor_fn_2=stream_consumer.stream_record_processor_fn_2,
+    stream_pipe=stream_pipe.kinesis_data_pipe,
+    py_stream_record_processor_fn=stream_consumer.py_stream_record_processor_fn,
+    node_stream_record_processor_fn=stream_consumer.node_stream_record_processor_fn,
     description="CloudWatch Dashboard for Stream Data Producer Metrics"
 )
 

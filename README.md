@@ -31,7 +31,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
     The cdk stack provided in the repo will create the following resources,
     - VPC with public & private subnets, route tables, security group and nacl.
     - EC2 Instance that ingests data into the kinesis shards
-        - Data comes from covid19 patients list <sup>#Reference</sup>
+        - Data comes from covid19 patients list <sup>[Ref](#📚-references)</sup>
     - Lambda function[s] as kinesis consumer
 
     ```bash
@@ -85,6 +85,11 @@ Sample project to ingest data into kinesis shard and read using different lambda
 
     This is not an exhaustive list, please carry out other necessary steps as maybe applicable to your needs.
 
+## 📝 Next Steps - TODO
+
+- Create two shards in a stream
+- Create `Hot Shards`<sup>[Ref](#📚-references)</sup>
+
 ## 👋 Buy me a coffee
 
 [Buy me](https://paypal.me/valaxy) a coffee ☕, _or_ You can reach out to get more details through [here](https://youtube.com/c/valaxytechnologies/about).
@@ -96,6 +101,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
 1. [Kinesis Security - IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html)
 1. [Kinesis Consumers](https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis-create-package.html)
 1. [Metric Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
+1. [Scale Kinesis- Preempt Hot Shards](https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams/)
 
 ### 🏷️ Metadata
 

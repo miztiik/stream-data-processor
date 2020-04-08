@@ -30,7 +30,8 @@ class streamDataProducerStack(core.Stack):
             log_group_name=(
                 f"/{global_args.REPO_NAME}"
                 f"/producers"
-            )
+            ),
+            removal_policy=core.RemovalPolicy.DESTROY
         )
 
         self.data_pipe__producer_lg_ssm_param = _ssm.StringParameter(self, "dataPipeLgParameter",

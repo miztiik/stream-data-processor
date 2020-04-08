@@ -24,13 +24,14 @@ class streamDataConsumerStack(core.Stack):
         #####      KINESIS CONSUMER 1       #######
         ###########################################
         with open("stream_data_consumer/lambda_src/stream_record_processor.py", encoding="utf8") as fp:
-            stream_record_processor_fn_handler_code = fp.read()
-        self.stream_record_processor_fn = _lambda.Function(
+            py_stream_record_processor_fn_handler_code = fp.read()
+        self.py_stream_record_processor_fn = _lambda.Function(
             self,
-            id='streamDataProcessor',
-            function_name="stream_record_processor_fn",
+            id='pyStreamDataProcessor',
+            function_name="py_stream_record_processor_fn",
             runtime=_lambda.Runtime.PYTHON_3_7,
-            code=_lambda.InlineCode(stream_record_processor_fn_handler_code),
+            code=_lambda.InlineCode(
+                py_stream_record_processor_fn_handler_code),
             handler='index.lambda_handler',
             timeout=core.Duration.seconds(3),
             reserved_concurrent_executions=1,
@@ -51,25 +52,26 @@ class streamDataConsumerStack(core.Stack):
             ]
         )
         roleStmt1.sid = "AllowKinesisToTriggerLambda"
-        self.stream_record_processor_fn.add_to_role_policy(roleStmt1)
+        self.py_stream_record_processor_fn.add_to_role_policy(roleStmt1)
 
-        self.stream_record_processor_fn.add_event_source_mapping("dataPipeConsumer",
-                                                                 event_source_arn=stream_arn,
-                                                                 batch_size=2,
-                                                                 enabled=True,
-                                                                 starting_position=_lambda.StartingPosition.TRIM_HORIZON
-                                                                 )
+        self.py_stream_record_processor_fn.add_event_source_mapping("dataPipeConsumer",
+                                                                    event_source_arn=stream_arn,
+                                                                    batch_size=2,
+                                                                    enabled=True,
+                                                                    starting_position=_lambda.StartingPosition.TRIM_HORIZON
+                                                                    )
         ###########################################
         #####      KINESIS CONSUMER 2       #######
         ###########################################
         with open("stream_data_consumer/lambda_src/stream_record_processor.js", encoding="utf8") as fp:
-            stream_record_processor_fn_2_handler_code = fp.read()
-        self.stream_record_processor_fn_2 = _lambda.Function(
+            node_stream_record_processor_fn_handler_code = fp.read()
+        self.node_stream_record_processor_fn = _lambda.Function(
             self,
             id='streamDataProcessor2',
-            function_name="stream_record_processor_fn_2",
+            function_name="node_stream_record_processor_fn",
             runtime=_lambda.Runtime.NODEJS_12_X,
-            code=_lambda.InlineCode(stream_record_processor_fn_2_handler_code),
+            code=_lambda.InlineCode(
+                node_stream_record_processor_fn_handler_code),
             handler='index.handler',
             timeout=core.Duration.seconds(3),
             reserved_concurrent_executions=1,
@@ -78,14 +80,14 @@ class streamDataConsumerStack(core.Stack):
             }
         )
 
-        self.stream_record_processor_fn_2.add_to_role_policy(roleStmt1)
+        self.node_stream_record_processor_fn.add_to_role_policy(roleStmt1)
 
-        self.stream_record_processor_fn_2.add_event_source_mapping("dataPipeConsumer",
-                                                                   event_source_arn=stream_arn,
-                                                                   batch_size=2,
-                                                                   enabled=True,
-                                                                   starting_position=_lambda.StartingPosition.TRIM_HORIZON
-                                                                   )
+        self.node_stream_record_processor_fn.add_event_source_mapping("dataPipeConsumer",
+                                                                      event_source_arn=stream_arn,
+                                                                      batch_size=2,
+                                                                      enabled=True,
+                                                                      starting_position=_lambda.StartingPosition.TRIM_HORIZON
+                                                                      )
 
         ###########################################
         ################# OUTPUTS #################
