@@ -32,21 +32,19 @@ build: ## Synthesize the template
 post_build: ## Show differences
 	cdk diff
 
-
-deploy:
-	cdk deploy --profile ${AWS_PROFILE} --require-approval never
-
-deploy_all: ## Deploy ALL stack
+deploy: ## Deploy ALL stack
 	cdk deploy stream-data-pipe --profile ${AWS_PROFILE} --require-approval never
 	cdk deploy web-app-vpc-stack --profile ${AWS_PROFILE} --require-approval never
 	cdk deploy stream-data-consumer-stack --profile ${AWS_PROFILE} --require-approval never
 	cdk deploy stream-data-producer-stack --profile ${AWS_PROFILE} --require-approval never
 	cdk deploy stream-data-producer-monitor-stack --profile ${AWS_PROFILE} --require-approval never
 
-remove: ## Delete Stack without confirmation
-	cdk destroy --profile ${AWS_PROFILE} --force
-
-
+destroy: ## Delete Stack without confirmation
+	cdk destroy stream-data-pipe --profile ${AWS_PROFILE} --force
+	cdk destroy web-app-vpc-stack --profile ${AWS_PROFILE} --force
+	cdk destroy stream-data-consumer-stack --profile ${AWS_PROFILE} --force
+	cdk destroy stream-data-producer-stack --profile ${AWS_PROFILE} --force
+	cdk destroy stream-data-producer-monitor-stack --profile ${AWS_PROFILE} --force
 deps: deps_python ## Install dependancies
 
 
