@@ -48,7 +48,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
 
     ```bash
     cdk bootstrap
-    cdk deploy stream-data-processor
+    cdk deploy stream-data-producer-monitor-stack
     # Follow onscreen prompts
     ```
 
