@@ -114,7 +114,7 @@ def auto_send_records():
     while True:
         for i in range(NO_OF_RECORDS):
             d = {}
-            r = random.randint(0, p_len)
+            r = random.randint(1, p_len)
             d["patient_number"] = p_data[r]["patient_number"]
             d["date_announced"] = p_data[r]["date_announced"]
             d["state_code"] = p_data[r]["state_code"]

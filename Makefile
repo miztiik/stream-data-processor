@@ -45,6 +45,8 @@ destroy: ## Delete Stack without confirmation
 	cdk destroy stream-data-consumer-stack --profile ${AWS_PROFILE} --force
 	cdk destroy stream-data-producer-stack --profile ${AWS_PROFILE} --force
 	cdk destroy stream-data-producer-monitor-stack --profile ${AWS_PROFILE} --force
+
+
 deps: deps_python ## Install dependancies
 
 

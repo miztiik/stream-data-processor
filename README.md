@@ -1,6 +1,10 @@
 # Process Streaming Data using Kinesis
 
-Sample project to ingest data into kinesis shard and read using different lambda, as you will do in a fan-out architecture.
+Real-time delivery of data and insights enables businesses to pivot quickly in response to changes in demand, user engagement, and infrastructure events, among many others. Amazon Kinesis offers a managed service that lets you focus on building your applications, rather than managing infrastructure. Scalability is provided out-of-the-box, allowing you to ingest and process gigabytes of streaming data per second.
+
+Kinesis Data Stream consists one or many shards. Each data stream is composed of one or more shards that act as units of capacity. Shards make it easy for you to design and scale a streaming pipeline by providing a predefined write and read capacity. As workloads grow, an application may read or write to a shard at a rate that exceeds its capacity, creating a hot shard and requiring you to add capacity quickly. Shards also enable you to parallelize the processing of large datasets and compute results quickly.
+
+This project will show how to setup a kinesis stream[single shard] and setup a `producer` to ingest data into kinesis shard. A `consumer` that will read using different lambda functions, as you will do in a pub-sub architecture.
 
   ![Miztiik Serverless Lambda Profiler AWS XRay](images/miztiik-stream-data-processor-architecture-00.png)
 
@@ -31,7 +35,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
     The cdk stack provided in the repo will create the following resources,
     - VPC with public & private subnets, route tables, security group and nacl.
     - EC2 Instance that ingests data into the kinesis shards
-        - Data comes from covid19 patients list <sup>[Ref](#📚-references)</sup>
+        - Data comes from covid19 patients list <sup>[Ref](#-references)</sup>
     - Lambda function[s] as kinesis consumer
 
     ```bash
@@ -57,19 +61,31 @@ Sample project to ingest data into kinesis shard and read using different lambda
     The _Outputs_ section of the Clouformation template/service has the required information.
 
     - Connect to the EC2 instance using Session Manager - [Get help here](https://www.youtube.com/watch?v=-ASMtZBrx-k)
-        - Update the `app_stacks/bootstrap_scripts/constants.py` with desired values
+        - Update the `stream_data_producer/bootstrap_scripts/constants.py` with desired values
         - Run the `kinesis_producer.py`
 
         ```bash
-        cd stream-data-processor/app_stacks/bootstrap_scripts/
+        cd stream-data-processor/stream_data_producer/bootstrap_scripts/
         python3 kinesis_producer.py
         ```
+
+    - Goto your cloudwatch dashboard and open the newsly created `stream-processor` dashboard, You should be able to see something like this,
+
+        ![miztiik-stream-data-processor-cloudwatch-dashboard](images/miztiik-stream-data-processor-architecture-cloudwatch-black.png)
+
+    Key take away,
+    1. Now you have learnt how to setup kinesis data streams,
+        - Setup Shards
+    1. Setup Kinesis producers using boto3 - _Check `kinesis_producer.py` to learn more.
+    1. Setup Kinesis consumers, Two lambda, in `python` & `nodejs`
+    1. Setup dynamic dashboards based logs, metrics
+    1. Performance Analysis - _Some more stats [here](performance_stats.md)_
 
 1. ## 🧹 CleanUp
 
     If you want to destroy all the resources created by the stack, Execute the below command to delete the stack, or _you can delete the stack from console as well_
 
-    - Resources created during [deployment](#🚀-resource-deployment-using-aws-cdk)
+    - Resources created during [deployment](#-resource-deployment-using-aws-cdk)
     - Delete CloudWatch Lambda LogGroups
     - _Any other custom resources, you have created for this demo_
 
@@ -88,7 +104,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
 ## 📝 Next Steps - TODO
 
 - Create two shards in a stream
-- Create `Hot Shards`<sup>[Ref](#📚-references)</sup>
+- Create `Hot Shards`<sup>[Ref](#-references)</sup>
 
 ## 👋 Buy me a coffee
 
@@ -101,7 +117,7 @@ Sample project to ingest data into kinesis shard and read using different lambda
 1. [Kinesis Security - IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html)
 1. [Kinesis Consumers](https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis-create-package.html)
 1. [Metric Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
-1. [Scale Kinesis- Preempt Hot Shards](https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams/)
+1. [Scale Kinesis- Preempt Hot Shards](https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams)
 
 ### 🏷️ Metadata
 
