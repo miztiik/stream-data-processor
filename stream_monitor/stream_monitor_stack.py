@@ -71,6 +71,36 @@ class streamMonitorStack(core.Stack):
             period=core.Duration.minutes(30),
             statistic="Sum"
         )
+        stream_put_success_metric = _cloudwatch.Metric(
+            namespace="AWS/Kinesis",
+            metric_name="PutRecords.Success",
+            dimensions={
+                "StreamName": f"{stream_pipe.stream_name}"
+            },
+            label="PutRecords.LatSuccessency",
+            period=core.Duration.minutes(30),
+            statistic="Sum"
+        )
+        stream_put_latency_metric = _cloudwatch.Metric(
+            namespace="AWS/Kinesis",
+            metric_name="PutRecords.Latency",
+            dimensions={
+                "StreamName": f"{stream_pipe.stream_name}"
+            },
+            label="PutRecords.Latency",
+            period=core.Duration.minutes(30),
+            statistic="Sum"
+        )
+        stream_get_latency_metric = _cloudwatch.Metric(
+            namespace="AWS/Kinesis",
+            metric_name="GetRecords.Latency",
+            dimensions={
+                "StreamName": f"{stream_pipe.stream_name}"
+            },
+            label="GetRecords.Latency",
+            period=core.Duration.minutes(30),
+            statistic="Sum"
+        )
 
         ##################################################
         ##########    STREAM PRODUCER METRICS    #########
@@ -146,39 +176,47 @@ class streamMonitorStack(core.Stack):
             _cloudwatch.SingleValueWidget(
                 title="TotalRecordsProduced",
                 metrics=[records_produced_metric]
+            ),
+            _cloudwatch.SingleValueWidget(
+                title="RecordsProcessed-by-Python-Consumer",
+                metrics=[py_records_processed_metric]
+            ),
+            _cloudwatch.SingleValueWidget(
+                title="RecordsProcessed-by-Node-Consumer",
+                metrics=[node_records_processed_metric]
             )
         )
 
         # Stream Incoming bytes Graph
         stream_processor_dashboard.add_widgets(
             _cloudwatch.Row(
-                _cloudwatch.Column(
-                    _cloudwatch.GraphWidget(
-                        title="Stream Ingestion Metrics",
-                        left=[stream_in_bytes_metric],
-                        right=[stream_in_records_metric]
-                    )
+                _cloudwatch.GraphWidget(
+                    title="Shard Ingestion Metrics",
+                    left=[stream_in_bytes_metric],
+                    right=[stream_in_records_metric]
                 ),
-                _cloudwatch.Column(
-                    _cloudwatch.GraphWidget(
-                        title="Stream Throttle Metrics",
-                        left=[stream_w_throttle_metric],
-                        right=[stream_r_throttle_metric]
-                    )
+                _cloudwatch.GraphWidget(
+                    title="Shard Throttle Metrics",
+                    left=[stream_w_throttle_metric],
+                    right=[stream_r_throttle_metric]
                 )
             )
         )
 
         stream_processor_dashboard.add_widgets(
-            _cloudwatch.SingleValueWidget(
-                title="RecordsProcessed-by-Python-Consumer",
-                metrics=[py_records_processed_metric]
-            )
-        )
-        stream_processor_dashboard.add_widgets(
-            _cloudwatch.SingleValueWidget(
-                title="RecordsProcessed-by-Node-Consumer",
-                metrics=[node_records_processed_metric]
+            _cloudwatch.Row(
+                _cloudwatch.GraphWidget(
+                    title="Stream Put Latency",
+                    left=[stream_put_latency_metric]
+                ),
+                _cloudwatch.GraphWidget(
+                    title="Stream Get Latency",
+                    left=[stream_get_latency_metric]
+                ),
+                _cloudwatch.GraphWidget(
+                    title="Stream Put Success",
+                    left=[stream_put_success_metric]
+                )
             )
         )
 
