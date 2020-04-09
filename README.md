@@ -70,7 +70,7 @@ This project will show how to setup a kinesis stream[single shard] and setup a `
         python3 kinesis_producer.py
         ```
 
-    - Goto your cloudwatch dashboard and open the newsly created `stream-processor` dashboard, You should be able to see something like this,
+    - Goto your cloudwatch dashboard and open the newly created `stream-processor` dashboard, You should be able to see something like this,
 
         ![miztiik-stream-data-processor-cloudwatch-dashboard](images/miztiik-stream-data-processor-architecture-cloudwatch-black.png)
 
