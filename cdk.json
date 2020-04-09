@@ -7,8 +7,6 @@
     "github_repo_url": "https://github.com/miztiik/stream-data-processor",
     "github_profile": "https://github.com/miztiik",
     "youtube_profile": "https://youtube.com/c/valaxytechnologies",
-    "deploy": "--require-approval never",
-    "destroy": "--force",
     "envs": {
       "dev": {
         "region": "us-east-1",
