@@ -61,8 +61,9 @@ This project will show how to setup a kinesis stream[single shard] and setup a `
     The _Outputs_ section of the Clouformation template/service has the required information.
 
     - Connect to the EC2 instance using Session Manager - [Get help here](https://www.youtube.com/watch?v=-ASMtZBrx-k)
+        - Navigate to `/var/stream-data-processor`
         - Update the `stream_data_producer/bootstrap_scripts/constants.py` with desired values
-        - Run the `kinesis_producer.py`
+        - Run the `kinesis_producer.py`. This should start sending message to your kinesis stream. This is in addition to the data that was already pushed to the stream during the instance bootup sequence.
 
         ```bash
         cd stream-data-processor/stream_data_producer/bootstrap_scripts/
