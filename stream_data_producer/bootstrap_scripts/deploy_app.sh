@@ -51,18 +51,26 @@ function install_libs(){
     pip3 install boto3
 }
 
-function install_cw_agent(){
-    # Installing AWS CloudWatch Agent FOR AMAZON LINUX RPM
-    agent_dir="/tmp/cw_agent"
-    cw_agent_rpm="https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm"
-    mkdir -p ${agent_dir} \
-        && cd ${agent_dir} \
-        && sudo yum install -y curl \
-        && curl ${cw_agent_rpm} -o ${agent_dir}/amazon-cloudwatch-agent.rpm \
-        && sudo rpm -U ${agent_dir}/amazon-cloudwatch-agent.rpm
+function install_nodejs(){
+    # https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+    . ~/.nvm/nvm.sh
+    nvm install node
+    node -e "console.log('Running Node.js ' + process.version)"
+}
+
+function install_cw_agent() {
+# Installing AWS CloudWatch Agent FOR AMAZON LINUX RPM
+agent_dir="/tmp/cw_agent"
+cw_agent_rpm="https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm"
+mkdir -p ${agent_dir} \
+    && cd ${agent_dir} \
+    && sudo yum install -y curl \
+    && curl ${cw_agent_rpm} -o ${agent_dir}/amazon-cloudwatch-agent.rpm \
+    && sudo rpm -U ${agent_dir}/amazon-cloudwatch-agent.rpm
 
 
-    cw_agent_schema="/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
+cw_agent_schema="/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
 
 # PARAM_NAME="/stream-data-processor/streams/data_pipe/stream_name"
 # a=$(aws ssm get-parameter --name "$PARAM_NAME" --with-decryption --query "Parameter.{Value:Value}" --output text)
